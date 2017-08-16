@@ -48,11 +48,24 @@ class MyApp(Gtk.Application):
         # create a gtk window belonging to the application itself
         janela = MyWindow(self)
 
+        # a grid
+        grid = Gtk.Grid()
+        grid.set_column_spacing(20)
+
+        # in the grid:
+        # attach the first label in the top left corner
+        grid.attach(MyImage(), 0,0,1,1)
+        # attach second label
+
+        grid.attach(MyLabel(), 1,0,1,1)
+
         # create an instance of MyImage() and the add it to the window
         #janela.add(MyImage())
 
         # create an instance of MyImage() and the add it to the window
-        janela.add(MyLabel())
+        #janela.add(MyLabel())
+
+        janela.add(grid)
 
         # show the window
         janela.show_all()
