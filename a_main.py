@@ -1,16 +1,40 @@
 
-print('Hello Worl')
+print('init the application')
 
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import sys
+import os
 
 class MyWindow(Gtk.ApplicationWindow):
     ''''''
     #contructor: the title is "Welcome to Gnome " and the window belong to the application app
     def __init__(self, app):
         Gtk.Window.__init__(self, title='Welcome to Gnome', application=app)
+        # set the title
+        self.set_title('Welcome to Gnome')
+
+        # set default size of the window
+        self.set_default_size(300,300)
+
+        #set the center
+        self.set_position(Gtk.WindowPosition.MOUSE) #Gtk.WindowPosition.CENTER., Gtk.WindowPosition.CENTER_ALWAYS, Gtk.WindowPosition.CENTER_ON_PARENT
+
+
+
+# a class to create an image
+class MyImage(Gtk.Image):
+    ''''''
+    def __init__(self):
+        Gtk.Image.__init__(self)
+        self.set_from_file(os.getcwd()+'/asserts/ideia.png')
+
+
+class MyLabel(Gtk.Label):
+    def __init__(self):
+        Gtk.Label.__init__(self)
+        self.set_text('Marcos Vinícius')
 
 
 class MyApp(Gtk.Application):
@@ -21,20 +45,16 @@ class MyApp(Gtk.Application):
         def __init__(self):
             Gtk.Application.__init__(self)
 
-
-        #create a gtk window belonging to the application itself
+        # create a gtk window belonging to the application itself
         janela = MyWindow(self)
 
-        # set the title
-        janela.set_title('Welcome to Gnome')
+        # create an instance of MyImage() and the add it to the window
+        #janela.add(MyImage())
 
-        # set default size of the window
-        janela.set_default_size(300,200)
+        # create an instance of MyImage() and the add it to the window
+        janela.add(MyLabel())
 
-        #set the center
-        janela.set_position(Gtk.WindowPosition.MOUSE) #Gtk.WindowPosition.CENTER., Gtk.WindowPosition.CENTER_ALWAYS, Gtk.WindowPosition.CENTER_ON_PARENT
-
-        #show the window
+        # show the window
         janela.show_all()
 
     # start up the application
@@ -43,8 +63,8 @@ class MyApp(Gtk.Application):
         Gtk.Application.do_startup(self)
 
 
-
-#create and the run application, exit the value
-app = MyApp()
-exit_status = app.run(sys.argv)
-sys.exit(exit_status)
+if __name__ == '__main__':
+    #create and the run application, exit the value
+    app = MyApp()
+    exit_status = app.run(sys.argv)
+    sys.exit(exit_status)
