@@ -166,7 +166,9 @@ def commit_dados(*args):
 
 
 # Inicialização da aplicação
-win = Janela()
-win.connect("delete-event", Gtk.main_quit)
-win.show_all()
-Gtk.main()
+if __name__ == '__main__':
+
+    win = Janela()
+    win.connect("delete-event", Gtk.main_quit)
+    win.show_all()
+    Gtk.main()
