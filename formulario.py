@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-
+import gi
+gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import Gdk
 import sqlite3
@@ -53,7 +54,7 @@ class Janela(Gtk.Window):
         self.grid2.attach(self.entry_cpf, 1, 3, 1, 1)
 
         # Texto e campo de entrada para o telefone
-        self.label_tel = Gtk.Label(label="Tel ")
+        self.label_tel = Gtk.Label(label="Telefone ")
         self.label_tel.set_halign(Gtk.Align.END)
         self.grid2.attach(self.label_tel, 0, 4, 1, 1)
         self.entry_tel = Gtk.Entry()
