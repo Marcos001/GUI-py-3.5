@@ -59,6 +59,14 @@ class window(QWidget):
         else:
             self.message_box = QMessageBox.warning(self, "Exemplo 1", self.text)
 
+    def closeEvent(self, QCloseEvent):
+        QCloseEvent.ignore()
+
+        question_close = QMessageBox.question(self, 'Fechamento', 'Deseja realmente fechar a Aplicação',
+                                              QMessageBox.Yes, QMessageBox.No)
+        if question_close == QMessageBox.Yes:
+            exit(0)
+
 
 
 
