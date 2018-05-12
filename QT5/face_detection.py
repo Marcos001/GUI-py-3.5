@@ -16,28 +16,43 @@ class ShowVideo(QtCore.QObject):
 
     def __init__(self, parent=None):
         super(ShowVideo, self).__init__(parent)
+        self.ativado = True
+        self.feature_face = '/home/nig/PycharmProjects/GUI-py-3.5/asserts/caracteristicas_rosto.xml'
+
+    def fazer_marcacao_face(self, image):
+        image = cv2.flip(image, 180)  # espelha a imagem
+        faceCascade = cv2.CascadeClassifier(self.feature_face)
+        faces = faceCascade.detectMultiScale(
+            image,
+            minNeighbors=5,
+            minSize=(30, 30),
+            maxSize=(200, 200)
+        )
+
+        # Desenha um retângulo nas faces detectadas
+        for (x, y, w, h) in faces:
+            cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        return image
+
+    def detectar_face(self):
+        print('ativado')
+        self.ativado = True
 
     @QtCore.pyqtSlot()
     def startVideo(self):
-        arqCasc = '/home/nig/PycharmProjects/GUI-py-3.5/asserts/haarcascade_frontalface_default.xml'
-        faceCascade = cv2.CascadeClassifier(arqCasc)
+
+        value = 0
         run_video = True
         while run_video:
 
             ret, image = self.camera.read()
+            value +=  1
+            print('value de ativado = ', self.ativado, ' quadro ', value)
 
-            image = cv2.flip(image, 180)  # espelha a imagem
+            if  self.ativado is True:
+                print('Detectar rostos')
+                image = self.fazer_marcacao_face(image)
 
-            faces = faceCascade.detectMultiScale(
-                image,
-                minNeighbors=5,
-                minSize=(30, 30),
-                maxSize=(200, 200)
-            )
-
-            # Desenha um retângulo nas faces detectadas
-            for (x, y, w, h) in faces:
-                cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
             color_swapped_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -52,9 +67,6 @@ class ShowVideo(QtCore.QObject):
                                     QtGui.QImage.Format_RGB888)
 
             self.VideoSignal.emit(qt_image)
-
-            #
-
 
 
 class ImageViewer(QtWidgets.QWidget):
@@ -100,7 +112,7 @@ if __name__ == '__main__':
     push_detectar = QtWidgets.QPushButton('Detectar')
 
     push_iniciar_video.clicked.connect(vid.startVideo)
-    push_detectar.clicked.connect(close_app)
+    push_detectar.clicked.connect(vid.detectar_face)
 
     vertical_layout = QtWidgets.QVBoxLayout()
 
