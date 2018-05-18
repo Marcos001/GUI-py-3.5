@@ -1,11 +1,6 @@
-# Importing necessary libraries, mainly the OpenCV, and PyQt libraries
-import cv2
-import numpy as np
-import sys
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets
-from PyQt5 import QtGui
-from PyQt5.QtCore import pyqtSignal
+
+import sys, cv2
+from PyQt5 import QtCore, QtWidgets, QtGui
 
 
 class ShowVideo(QtCore.QObject):
@@ -17,7 +12,8 @@ class ShowVideo(QtCore.QObject):
     def __init__(self, parent=None):
         super(ShowVideo, self).__init__(parent)
         self.ativado = True
-        self.feature_face = '/home/nig/PycharmProjects/GUI-py-3.5/asserts/caracteristicas_rosto.xml'
+        self.feature_face = '../asserts/caracteristicas_rosto.xml'
+        print(' ---> ',self.feature_face)
 
     def fazer_marcacao_face(self, image):
         image = cv2.flip(image, 180)  # espelha a imagem

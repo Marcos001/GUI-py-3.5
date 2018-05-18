@@ -16,6 +16,7 @@ class Window(QWidget):
     def set_settings(self):
         self.resize(350,200)
 
+
     def create_widgets(self):
         self.progress_bar = QProgressBar(self)
         #self.progress_bar.setFixedWidth(300)
